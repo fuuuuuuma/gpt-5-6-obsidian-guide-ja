@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GPT-5.6 × Obsidian 最強活用 — 記憶構造テンプレート</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#1C3461; --brand-deep:#16284A; --brand-soft:rgba(28,52,97,.08); --brand-line:rgba(28,52,97,.22);
+  --accent:#5BBCD4; --accent-deep:#2C7A93; --accent-soft:rgba(91,188,212,.16);
+  --bg:#F7FAFC; --paper:#FFFFFF; --ink:#1C3461; --ink-mid:#4A6080; --line:rgba(28,52,97,.12);
+  --head:'Noto Sans JP';
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',-apple-system,'Hiragino Sans','Yu Gothic',sans-serif;line-height:1.7;}
+.draft-tag{background:var(--brand-deep);color:#fff;font-size:11px;font-weight:700;text-align:center;padding:7px;letter-spacing:.4px;}
+.doc{max-width:900px;margin:0 auto;background:var(--paper);box-shadow:0 0 60px rgba(0,0,0,.08);overflow:hidden;}
+.hero{position:relative;background:linear-gradient(160deg,var(--brand-soft) 0%,var(--bg) 70%);padding:44px 48px 38px;border-bottom:3px solid var(--brand-line);overflow:hidden;}
+.hero .coin{position:absolute;width:150px;height:150px;border-radius:50%;background:var(--accent);opacity:.15;top:-48px;right:-30px;}
+.hero .chan{display:inline-flex;align-items:center;gap:12px;margin-bottom:14px;}
+.eyebrow{font-family:var(--head);font-weight:900;color:var(--brand-deep);letter-spacing:2px;font-size:12.5px;margin-bottom:10px;}
+h1{font-family:var(--head);font-weight:900;font-size:32px;line-height:1.28;color:var(--ink);}
+h1 .hl{color:var(--brand-deep);} .hl{color:var(--brand-deep);font-weight:700;} .hl-a{color:var(--accent-deep);font-weight:700;}
+.hero p.sub{font-size:15.5px;color:var(--ink-mid);font-weight:700;margin-top:12px;max-width:660px;}
+section{padding:34px 48px;border-bottom:1px solid var(--line);}
+h2{font-family:var(--head);font-weight:900;font-size:22px;color:var(--ink);margin-bottom:6px;}
+h2 .no{display:inline-flex;width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--ink);font-size:16px;align-items:center;justify-content:center;margin-right:10px;box-shadow:0 2px 0 var(--accent-deep);vertical-align:middle;}
+p.desc{font-size:14.5px;color:var(--ink-mid);margin:6px 0 12px;}
+.chk{list-style:none;margin:8px 0 14px;} .chk li{font-size:14px;color:var(--ink);padding:5px 0 5px 24px;position:relative;} .chk li::before{content:'✔';position:absolute;left:2px;color:var(--brand);font-weight:900;}
+pre.prompt{background:var(--ink);color:#ECECEA;border-radius:12px;padding:16px 18px;white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,Menlo,monospace;font-size:13px;line-height:1.65;max-height:420px;overflow-y:auto;margin:6px 0 12px;}
+.btns{display:flex;gap:10px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:7px;background:var(--accent);border:2px solid var(--brand);color:var(--ink);border-radius:999px;padding:9px 20px;font-family:var(--head);font-weight:900;font-size:13.5px;cursor:pointer;text-decoration:none;}
+.btn:hover{filter:brightness(1.04);}
+.btn.ghost{background:var(--paper);border:1.5px solid var(--line);color:var(--brand-deep);}
+.btn.sm{padding:7px 16px;font-size:12.5px;}
+.linkcard{border:2px solid var(--brand);border-radius:16px;padding:20px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;background:var(--brand-soft);}
+.linkcard .cnt{font-family:var(--head);font-weight:900;color:var(--brand-deep);font-size:22px;}
+.linkcard .cnt small{display:block;font-size:12px;color:var(--ink-mid);font-weight:700;}
+.note{background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:12px;padding:16px 18px;font-size:14px;color:var(--ink);margin-top:8px;}
+.note b{color:var(--brand-deep);}
+ol.steps{margin:8px 0 0 20px;font-size:15px;color:var(--ink);} ol.steps li{margin-bottom:6px;}
+footer{background:var(--ink);color:#EBEBE7;padding:28px 48px;font-size:13px;}
+footer a{color:var(--accent);text-decoration:none;}
+.kitno{font-family:var(--head);font-weight:900;color:var(--accent-deep);font-size:13px;letter-spacing:1px;}
+/* 「N選」専用ページ（prompts100.html等）用の共通クラス。単体present.htmlでは未使用でも定義だけ残す */
+.catnav{position:sticky;top:0;background:var(--paper);border-bottom:1px solid var(--line);padding:12px 48px;display:flex;flex-wrap:wrap;gap:7px;z-index:20;}
+.catnav a{font-size:12.5px;font-weight:700;color:var(--brand-deep);text-decoration:none;background:var(--brand-soft);border:1px solid var(--line);border-radius:999px;padding:5px 12px;}
+.catnav a:hover{border-color:var(--brand);}
+.icard{background:var(--bg);border:1.5px solid var(--line);border-left:4px solid var(--brand);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+.ititle{font-family:var(--head);font-weight:900;font-size:16px;color:var(--ink);}
+.imeta{font-size:12.5px;color:var(--ink-mid);margin:4px 0 8px;}
+</style>
+</head>
+<body>
+<svg style="display:none">
+<symbol id="kawaru-logo" viewBox="0 0 406 93">
+    <rect x="6.67572e-06" y="13.4815" width="7.93029" height="74.5447" fill="currentColor"/>
+    <path d="M18.2397 52.7235L24.2772 47.5817L57.8911 88.0582L48.3318 88.0582L18.2397 52.7235Z" fill="#5BBCD4"/>
+    <path d="M34.8933 49.5514L40.9308 44.4096L77.2278 88.0366L67.4075 88.0262L34.8933 49.5514Z" fill="#5BBCD4"/>
+    <rect x="57.1908" y="2.92276" width="7.93029" height="83.5485" transform="rotate(42.3764 57.1908 2.92276)" fill="currentColor"/>
+    <rect x="59.4772" width="7.93029" height="22.2048" fill="currentColor"/>
+    <rect x="44.4096" y="7.9303" width="7.93029" height="22.9978" transform="rotate(-90 44.4096 7.9303)" fill="currentColor"/>
+    <path d="M110.882 61.3999L110.204 47.3281L135.413 20.7649H148.958L126.233 45.2211L119.46 52.4451L110.882 61.3999ZM99.9703 73.4399V20.7649H112.086V73.4399H99.9703ZM136.015 73.4399L117.278 50.4886L125.254 41.8349L150.237 73.4399H136.015ZM181.053 73.4399V65.5386L180.301 63.8079V49.6609C180.301 47.1525 179.523 45.196 177.968 43.7914C176.463 42.3867 174.13 41.6844 170.97 41.6844C168.813 41.6844 166.681 42.0355 164.574 42.7379C162.517 43.39 160.761 44.293 159.306 45.4469L155.092 37.2446C157.299 35.6895 159.958 34.4855 163.069 33.6326C166.179 32.7798 169.339 32.3534 172.55 32.3534C178.721 32.3534 183.512 33.8082 186.923 36.7179C190.334 39.6275 192.04 44.1676 192.04 50.3381V73.4399H181.053ZM168.712 74.0419C165.552 74.0419 162.843 73.5151 160.585 72.4616C158.328 71.358 156.597 69.878 155.393 68.0219C154.189 66.1657 153.587 64.0838 153.587 61.7761C153.587 59.3681 154.164 57.2611 155.318 55.4551C156.522 53.6491 158.403 52.2445 160.962 51.2411C163.52 50.1876 166.856 49.6609 170.97 49.6609H181.731V56.5086H172.249C169.49 56.5086 167.584 56.9601 166.53 57.8631C165.527 58.7661 165.025 59.8949 165.025 61.2494C165.025 62.7544 165.602 63.9584 166.756 64.8614C167.96 65.7142 169.59 66.1406 171.647 66.1406C173.604 66.1406 175.359 65.6891 176.915 64.7861C178.47 63.833 179.599 62.4534 180.301 60.6474L182.107 66.0654C181.254 68.674 179.699 70.6556 177.441 72.0101C175.184 73.3646 172.274 74.0419 168.712 74.0419ZM213.443 73.4399L198.844 32.9554H209.906L222.021 67.7961H216.754L229.396 32.9554H239.329L251.594 67.7961H246.327L258.818 32.9554H269.203L254.529 73.4399H243.166L232.406 43.5656H235.867L224.73 73.4399H213.443ZM300.427 73.4399V65.5386L299.675 63.8079V49.6609C299.675 47.1525 298.897 45.196 297.342 43.7914C295.837 42.3867 293.504 41.6844 290.344 41.6844C288.187 41.6844 286.055 42.0355 283.948 42.7379C281.891 43.39 280.135 44.293 278.68 45.4469L274.466 37.2446C276.674 35.6895 279.332 34.4855 282.443 33.6326C285.553 32.7798 288.714 32.3534 291.924 32.3534C298.095 32.3534 302.886 33.8082 306.297 36.7179C309.708 39.6275 311.414 44.1676 311.414 50.3381V73.4399H300.427ZM288.086 74.0419C284.926 74.0419 282.217 73.5151 279.959 72.4616C277.702 71.358 275.971 69.878 274.767 68.0219C273.563 66.1657 272.961 64.0838 272.961 61.7761C272.961 59.3681 273.538 57.2611 274.692 55.4551C275.896 53.6491 277.777 52.2445 280.336 51.2411C282.894 50.1876 286.23 49.6609 290.344 49.6609H301.105V56.5086H291.623C288.864 56.5086 286.958 56.9601 285.904 57.8631C284.901 58.7661 284.399 59.8949 284.399 61.2494C284.399 62.7544 284.976 63.9584 286.13 64.8614C287.334 65.7142 288.964 66.1406 291.021 66.1406C292.978 66.1406 294.734 65.6891 296.289 64.7861C297.844 63.833 298.973 62.4534 299.675 60.6474L301.481 66.0654C300.628 68.674 299.073 70.6556 296.815 72.0101C294.558 73.3646 291.648 74.0419 288.086 74.0419ZM324.296 73.4399V32.9554H335.508V44.3934L333.928 41.0824C335.132 38.2229 337.063 36.0657 339.722 34.6109C342.381 33.1059 345.617 32.3534 349.429 32.3534V43.1894C348.928 43.1392 348.476 43.1141 348.075 43.1141C347.674 43.064 347.247 43.0389 346.796 43.0389C343.585 43.0389 340.976 43.967 338.97 45.8231C337.013 47.6291 336.035 50.4635 336.035 54.3264V73.4399H324.296ZM376.043 74.0419C372.681 74.0419 369.671 73.3897 367.013 72.0854C364.404 70.781 362.372 68.7995 360.917 66.1406C359.462 63.4316 358.735 59.9952 358.735 55.8314V32.9554H370.474V54.1006C370.474 57.4618 371.176 59.945 372.581 61.5504C374.036 63.1055 376.068 63.8831 378.676 63.8831C380.482 63.8831 382.088 63.5069 383.492 62.7544C384.897 61.9517 386.001 60.7477 386.803 59.1424C387.606 57.4869 388.007 55.43 388.007 52.9719V32.9554H399.746V73.4399H388.609V62.3029L390.641 65.5386C389.287 68.348 387.28 70.48 384.621 71.9349C382.012 73.3395 379.153 74.0419 376.043 74.0419Z" fill="currentColor"/>
+  </symbol>
+</svg>
+<div class="doc"><div class="hero"><span class="coin"></span><div class="chan"><svg width="132" height="30" style="color:var(--brand)"><use href="#kawaru-logo"/></svg></div><div class="eyebrow">🎁 PRESENT KIT</div><h1><span class="hl">Obsidian記憶構造テンプレート</span><br>AIが迷わず再開できるVault</h1><p class="sub">Rules・Project・Knowledge・MOC・Memory・Outputを分け、Codexと人が同じ正本を使える構造です。</p></div><section><div class="kitno">STRUCTURE</div><h2><span class="no">1</span>Vault全体の構造</h2><p class="desc">フォルダはテーマではなく、情報の役割とライフサイクルで分けます。</p><pre class="prompt" id="tree">Vault/
+├── 00_Inbox/
+├── 01_Daily/
+├── 02_Knowledge/
+├── 03_MOCs/
+├── 10_Projects/
+├── 20_Areas/
+├── 30_Rules/
+├── 40_Memory/
+├── 50_Outputs/
+├── 90_Archive/
+├── 99_Templates/
+├── AGENTS.md
+└── HOME.md</pre><div class="btns"><button class="btn" onclick="copyPrompt('tree',this)">📋 構造をコピー</button><a class="btn ghost" href="https://github.com/fuuuuuuma/gpt-5-6-obsidian-guide-ja/tree/main/kit/memory-template">GitHubで全ファイルを見る →</a></div></section><section><div class="kitno">MEMORY LAYERS</div><h2><span class="no">2</span>長期記憶を分ける</h2><div class="icard"><div class="ititle">User / Business</div><div class="imeta">本人が確認した安定情報と、継続して使う事業の前提</div></div><div class="icard"><div class="ititle">Decisions</div><div class="imeta">選択肢、採用理由、見送った理由、見直し条件</div></div><div class="icard"><div class="ititle">Feedback / Failures</div><div class="imeta">次回の判断基準と、再現条件つきの再発防止</div></div></section><section><div class="kitno">DOWNLOAD</div><h2><span class="no">3</span>全文を受け取る</h2><pre class="prompt" id="pfull"># Obsidian × Codex 記憶構造テンプレート
+
+以下は配布フォルダに含まれる実用ファイルです。ファイル見出しのパスに合わせて保存すると、Vaultの土台として使えます。
+
+## .gitignore
+
+```text
+.DS_Store
+.obsidian/workspace*.json
+.trash/
+*.env
+.env*
+secrets/
+```
+
+## 00_Inbox/README.md
+
+```markdown
+# Inbox
+
+保存先を決める前の一時置き場。週次レビューで次のいずれかへ移す。
+
+- 今日だけの記録 → `01_Daily`
+- 長く使う一つの論点 → `02_Knowledge`
+- 期限と成果物がある仕事 → `10_Projects`
+- 継続領域 → `20_Areas`
+- 再利用する判断・指摘・失敗 → `40_Memory`
+- 不要 → 削除候補として人へ確認
+
+Inboxを長期保管庫にしない。
+```
+
+## 01_Daily/README.md
+
+```markdown
+# Daily Notes
+
+`YYYY-MM-DD.md`で作成する。気づき、作業記録、未整理の考えを低い摩擦で残す場所。
+
+Dailyへ書いた内容は、そのまま永続ルールにしない。週次レビューで再利用価値があるものだけProject、Knowledge、Memoryへ昇格する。
+
+テンプレート: [[99_Templates/Daily]]
+```
+
+## 02_Knowledge/README.md
+
+```markdown
+# Knowledge
+
+1ノート1論点で、自分が理解・判断した内容を置く。
+
+良いタイトルは、本文を開く前に主張や問いが分かる。
+
+- 広すぎる: `AIについて.md`
+- 読みやすい: `外部記憶は保存と参照を分けて考える.md`
+
+本文には要点、自分の解釈、使う条件、使わない条件、出典、確認日、関連Projectを置く。
+
+テンプレート: [[99_Templates/Knowledge]]
+```
+
+## 03_MOCs/README.md
+
+```markdown
+# MOCs
+
+MOC（Map of Content）はテーマ別の判断地図。リンク一覧だけでなく、読む順番、対象者、採用する論点、矛盾、未確認事項を書く。
+
+例:
+
+```markdown
+# YouTube制作 MOC
+
+## 初めて読む
+- [[視聴者の課題]]
+- [[チャンネルの価値提案]]
+
+## 企画時に読む
+- [[過去動画の重複チェック]]
+- [[一次情報の確認ルール]]
+
+## 現在の論点
+- AとBは前提が異なる。今回の動画ではAを採用する。
+```
+```
+
+## 10_Projects/README.md
+
+```markdown
+# Projects
+
+期限、成果物、完了条件がある仕事を置く。Projectノートは人とAIの共通の引き継ぎ書にする。
+
+各Projectに含める項目:
+
+- 目的と対象者
+- 成果物と保存先
+- やること / やらないこと
+- 参照Source / Knowledge / MOC
+- 決定済み
+- 現在地
+- 次の一手
+- 確認待ち
+- 完了条件
+
+終了したProjectは`90_Archive`へ移し、再利用するDecisionだけMemoryへ残す。
+
+テンプレート: [[99_Templates/Project]]
+```
+
+## 20_Areas/README.md
+
+```markdown
+# Areas
+
+期限のない継続領域を置く。例: YouTube、X、商品、学習、健康、顧客対応。
+
+Areaには次を置く。
+
+- 維持する基準
+- 現在の状態
+- 関連するMOCとProject
+- 定期レビューの頻度
+
+成果物をArea内へ積み上げず、完成物は`50_Outputs`へ置く。
+```
+
+## 30_Rules/Publishing.md
+
+```markdown
+# Publishing
+
+外部へ出る台本、スライド、投稿下書きの確認項目。
+
+- [ ] 事実、推測、提案を区別した
+- [ ] 最新仕様・料金・規約を公式情報で確認した
+- [ ] 出典URLと確認日を残した
+- [ ] 効果を保証する表現を避けた
+- [ ] 第三者の字幕・記事を長く転載していない
+- [ ] 個人情報・秘密情報・内部パスを除いた
+- [ ] チャンネルやブランドの方針に合う
+- [ ] 公開・投稿は人が最終確認する
+```
+
+## 30_Rules/Security.md
+
+```markdown
+# Security
+
+## 保存しない情報
+
+- APIキー、トークン、パスワード、秘密鍵
+- 契約上保存できない顧客情報
+- 公開範囲が不明な個人情報
+
+## AIに読ませる前
+
+- 利用するモデルとサービスのデータ取り扱いを確認する
+- 公開情報、社内情報、機密情報を区分する
+- 必要な範囲だけを作業フォルダへ置く
+
+## 変更前
+
+- 大量編集はテストVaultまたは小さな範囲で試す
+- Git、Sync履歴、外部バックアップなど復元手段を用意する
+- 削除と上書きは人へ確認する
+
+## Community Plugins
+
+- Restricted Modeから始める
+- 目的、配布元、更新状況、権限を確認する
+- 一度に複数導入せず、問題発生時に切り分けられるようにする
+```
+
+## 40_Memory/Business.md
+
+```markdown
+# Business
+
+## Purpose
+
+- [誰に、どんな価値を届けるか]
+
+## Products / Channels
+
+- [商品・サービス・チャンネル]
+
+## Audience
+
+- [対象者、困りごと、前提知識]
+
+## Principles
+
+- [継続して守る判断基準]
+
+## Metrics
+
+- [見る指標と、見ない指標]
+
+## Sources
+
+- [公式資料や事業計画へのリンク]
+```
+
+## 40_Memory/Decisions.md
+
+```markdown
+# Decisions
+
+## 記録形式
+
+### YYYY-MM-DD — [判断]
+
+- Decision:
+- Why:
+- Alternatives:
+- Evidence:
+- Owner:
+- Revisit when:
+- Related project:
+
+## Records
+
+&lt;!-- 新しい判断を上へ追加。前提が変わったら現行状態を明記する。 --&gt;
+```
+
+## 40_Memory/Failures.md
+
+```markdown
+# Failures
+
+同じ失敗を再発させないための記録。単なるエラーログではなく、原因と再発防止まで書く。
+
+## 記録形式
+
+### YYYY-MM-DD — [失敗パターン]
+
+- Symptom:
+- Cause:
+- Fix:
+- Prevention:
+- Scope:
+- Verified by:
+- Related project:
+
+## Records
+
+&lt;!-- 新しい失敗パターンだけを追加する。既知のものは既存項目を更新する。 --&gt;
+```
+
+## 40_Memory/Feedback.md
+
+```markdown
+# Feedback
+
+次回も使う具体的な指摘だけを残す。一度の好みや一時的な修正はProjectへ置く。
+
+## 記録形式
+
+### YYYY-MM-DD — [短いルール名]
+
+- Context:
+- Feedback:
+- Apply when:
+- Do not apply when:
+- Example:
+- Source project:
+
+## Records
+
+&lt;!-- 重複した指摘は統合する。 --&gt;
+```
+
+## 40_Memory/MEMORY.md
+
+```markdown
+# Memory Index
+
+毎回読む可能性が高い、短い索引。詳細をここへ集約しない。
+
+## 人と事業
+
+- [[User]] — 安定したプロフィールと好み
+- [[Business]] — 事業、顧客、商品、継続方針
+
+## 学習履歴
+
+- [[Decisions]] — 重要な判断と再検討条件
+- [[Feedback]] — 次回も守る指摘
+- [[Failures]] — 再発を防ぐ失敗パターン
+
+## 更新ルール
+
+- 一時的な状況はDailyまたはProjectへ置く
+- 新しい情報は出典と確認日を添える
+- 矛盾は追記で放置せず、現行内容を更新し履歴を残す
+- 月次で重複と期限切れを整理する
+```
+
+## 40_Memory/User.md
+
+```markdown
+# User
+
+長く変わらない情報だけを書く。
+
+## Profile
+
+- Name: [名前]
+- Language: [日本語]
+- Timezone: [Asia/Tokyo]
+- Role: [役割]
+
+## Preferences
+
+- Communication: [結論先 / 詳細重視など]
+- Working style: [朝に深い作業 / レビュー重視など]
+- Avoid: [避けたい表現・進め方]
+
+## Notes
+
+- 期限付きの状況や今日の感情はDailyへ置く
+- 推測でプロフィールを追加しない
+```
+
+## 50_Outputs/README.md
+
+```markdown
+# Outputs
+
+人へ渡せる完成物を置く。内部版と公開版を分ける。
+
+推奨Properties:
+
+```yaml
+type: output
+status: draft
+channel:
+source_checked: false
+approved: false
+publish_date:
+```
+
+外部公開や投稿は、`30_Rules/Publishing.md`の確認後に人が行う。
+```
+
+## 90_Archive/README.md
+
+```markdown
+# Archive
+
+終了したProject、無効になったルール、古い前提を置く。
+
+Archiveへ移すときは、次を確認する。
+
+- 現行ファイルから古いリンクが残っていないか
+- 再利用するDecision / Feedback / FailureをMemoryへ選別したか
+- 公開物と出典の関係が壊れないか
+- 廃止日と理由が必要か
+```
+
+## 99_Templates/Daily.md
+
+```markdown
+---
+type: daily
+date: {{date:YYYY-MM-DD}}
+---
+
+# {{date:YYYY-MM-DD}}
+
+## Focus
+
+- （記入）
+
+## Capture
+
+- （記入）
+
+## Work log
+
+- （記入）
+
+## Decisions made today
+
+- （記入）
+
+## Open loops
+
+- [ ] （記入）
+
+## Candidates for memory
+
+- Decision:
+- Feedback:
+- Failure:
+
+## End-of-day
+
+- Progress:
+- Blocker:
+- Next:
+```
+
+## 99_Templates/Decision.md
+
+```markdown
+---
+type: decision
+date: {{date:YYYY-MM-DD}}
+status: active
+owner:
+---
+
+# [Decision]
+
+## Context
+
+- （記入）
+
+## Decision
+
+- （記入）
+
+## Why
+
+- （記入）
+
+## Alternatives
+
+- （記入）
+
+## Evidence
+
+- （記入）
+
+## Consequences
+
+- （記入）
+
+## Revisit when
+
+- （記入）
+
+## Related project
+
+- （記入）
+```
+
+## 99_Templates/Knowledge.md
+
+```markdown
+---
+type: knowledge
+status: draft
+verified_on:
+---
+
+# [一つの主張または問い]
+
+## Summary
+
+- （記入）
+
+## My interpretation
+
+- （記入）
+
+## Use when
+
+- （記入）
+
+## Do not use when
+
+- （記入）
+
+## Evidence
+
+- [[Source note]]
+
+## Counterpoints / uncertainty
+
+- （記入）
+
+## Related
+
+- MOC:
+- Project:
+```
+
+## 99_Templates/Output.md
+
+```markdown
+---
+type: output
+status: draft
+channel:
+source_checked: false
+approved: false
+publish_date:
+---
+
+# [Output title]
+
+## Audience and purpose
+
+- （記入）
+
+## Content
+
+
+## Source map
+
+- Claim:
+  - Source:
+
+## Publication check
+
+- [ ] 最新仕様・料金・規約を確認した
+- [ ] 誇張表現を確認した
+- [ ] 第三者コンテンツの転載を確認した
+- [ ] 個人情報・秘密情報を除いた
+- [ ] 人が公開を承認した
+```
+
+## 99_Templates/Project.md
+
+```markdown
+---
+type: project
+status: planning
+owner:
+channel:
+due:
+source_checked: false
+---
+
+# [Project name]
+
+## Goal
+
+- Audience:
+- Outcome:
+- Why now:
+
+## Deliverables
+
+- [ ] （成果物を記入）
+
+## Scope
+
+- In:
+- Out:
+
+## Constraints
+
+- （記入）
+
+## References
+
+- MOC:
+- Sources:
+- Knowledge:
+
+## Decisions
+
+- （記入）
+
+## Current state
+
+- Completed:
+- In progress:
+- Blocked:
+
+## Next action
+
+- （記入）
+
+## Waiting for human confirmation
+
+- （記入）
+
+## Done when
+
+- [ ] 成果物が指定場所にある
+- [ ] 出典とリンクを確認した
+- [ ] 事実と提案を区別した
+- [ ] 変更範囲を確認した
+- [ ] 次回へ残す学びを選別した
+
+## Handoff
+
+- Summary:
+- Changed files:
+- Not changed:
+- Verification:
+- Remaining:
+```
+
+## 99_Templates/Source.md
+
+```markdown
+---
+type: source
+source_kind: official
+author:
+published:
+checked: {{date:YYYY-MM-DD}}
+url:
+---
+
+# [Source title]
+
+## Why this source matters
+
+- （記入）
+
+## Verified facts
+
+- （記入）
+
+## Claims requiring caution
+
+- （記入）
+
+## Relevant locations
+
+- Section / timestamp:
+
+## My notes
+
+- （記入）
+
+## Related knowledge
+
+- （記入）
+```
+
+## AGENTS.md
+
+```markdown
+# Vault共通ルール
+
+## オーナーと目的
+
+- オーナー: [名前]
+- 主な目的: [YouTube制作 / 事業運営 / 学習など]
+- 主な成果物: [台本 / スライド / 投稿下書きなど]
+
+## 応答と品質
+
+- 応答は日本語。コード、ファイル名、技術名は英語でもよい
+- 結果を先に伝え、説明は必要な分だけ付ける
+- 事実、推測、提案を区別する
+- 最新仕様、料金、規約は公式の一次情報で確認し、確認日を残す
+- 実機で確認していない操作を動作確認済みと表現しない
+
+## 安全
+
+- 削除、上書き、外部送信、公開、課金、自動投稿の前はオーナーへ確認する
+- APIキー、トークン、認証情報、秘密情報をVaultへ書かない
+- 公開文章は`30_Rules/Publishing.md`を確認する
+- 大量編集の前に変更対象を示し、復元手段を確認する
+
+## 編集範囲
+
+- 依頼されたファイルと範囲だけを変更する
+- 既存ファイルを大きく変える前に方針を示す
+- 中間物はProject配下、完成物は`50_Outputs`へ保存する
+- 第三者の字幕・全文コピーは公開用Outputへ含めない
+
+## 記憶
+
+- 安定した事実は`40_Memory/User.md`または`Business.md`へ置く
+- 重要な判断は`40_Memory/Decisions.md`へ置く
+- 次回も守る指摘は`40_Memory/Feedback.md`へ置く
+- 新しい失敗パターンは`40_Memory/Failures.md`へ置く
+- 一時的な状況はDailyまたはProjectへ置き、Memoryへ混ぜない
+- 週次レビューで重複・期限切れ・矛盾を整理する
+
+## 完了報告
+
+- 変えたファイル
+- 触っていない範囲
+- 検証したこと
+- 人の確認が残ること
+```
+
+## HOME.md
+
+```markdown
+# HOME
+
+## 現在の焦点
+
+- 最優先Project: [[10_Projects/README]]
+- 今日の記録: [[01_Daily/README]]
+- 未整理: [[00_Inbox/README]]
+
+## 仕事の入口
+
+- [[03_MOCs/README|MOCs — テーマ別の地図]]
+- [[20_Areas/README|Areas — 継続領域]]
+- [[40_Memory/MEMORY|Memory — 長期記憶の索引]]
+- [[50_Outputs/README|Outputs — 完成物]]
+
+## ルール
+
+- [[30_Rules/Security]]
+- [[30_Rules/Publishing]]
+
+## 今週のレビュー
+
+- [ ] Inboxを整理した
+- [ ] Projectの現在地を更新した
+- [ ] 新しいDecision / Feedback / Failureを選別した
+- [ ] 古い情報をArchiveへ移した
+- [ ] バックアップから戻せる状態を確認した
+```
+
+## README.md
+
+```markdown
+# Obsidian × Codex 記憶構造テンプレート
+
+CodexがVaultを読み書きし、人もObsidianから同じ内容を確認できる最小テンプレートです。 フォルダを増やすことではなく、**入力 → 根拠 → 判断 → 制作 → 振り返り**を一周させるために使います。
+
+## 最初にすること
+
+1. このフォルダを複製し、ObsidianでVaultとして開く
+2. `AGENTS.md`の`[ ]`部分を自分の運用へ合わせる
+3. `40_Memory/User.md`と`Business.md`へ、長く変わらない情報だけを書く
+4. `99_Templates/Project.md`から、現在進行中の仕事を一つ作る
+5. Codexで、このVault直下を作業場所として開く
+6. 自動編集前にGit、Sync履歴、外部バックアップなど復元手段を用意する
+
+## 構造
+
+```text
+.
+├── AGENTS.md
+├── HOME.md
+├── 00_Inbox/
+├── 01_Daily/
+├── 02_Knowledge/
+├── 03_MOCs/
+├── 10_Projects/
+├── 20_Areas/
+├── 30_Rules/
+├── 40_Memory/
+├── 50_Outputs/
+├── 90_Archive/
+└── 99_Templates/
+```
+
+## 運用原則
+
+- `AGENTS.md`は短い入口にする
+- 詳細な知識は別ノートへ置き、入口からリンクする
+- Raw、Source、Knowledge、Outputを区別する
+- 事実、推測、提案を区別する
+- Projectの進捗を長期Memoryへ混ぜない
+- Memoryへの昇格は週次レビューで人が決める
+- 自動編集の前に差分と復元手段を確認する
+
+## 最初の一周
+
+1. InboxまたはSourceへ材料を置く
+2. Knowledgeへ一つの主張として整理する
+3. MOCから関連ノートへ道を作る
+4. Projectで目的と完成条件を決める
+5. Outputを作る
+6. Decision、Feedback、Failure候補を人が選ぶ
+7. 週次レビューでArchiveとMemoryを整理する
+```
+</pre><div class="btns"><button class="btn" onclick="copyPrompt('pfull',this)">📋 全文コピー</button><button class="btn ghost" onclick="downloadText('pfull','obsidian-memory-template.md',this)">⬇ ダウンロード（.md）</button></div></section><section><div class="note"><b>始め方：</b>現在進行中のProjectを一つだけ入れ、Source→Knowledge→Output→Decisionを一周させてください。</div></section><footer>🎁 <a href="https://fuuuuuuma.github.io/gpt-5-6-obsidian-guide-ja/present.html">プレゼントキット</a>へ戻る ／ テンプレートは用途に合わせて調整してください</footer></div><script>
+function copyTextWithFallback(text){
+  function fallback(){
+    try{ var ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select();
+      var ok=document.execCommand('copy'); ta.remove(); return ok; }catch(e){ return false; }
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    return navigator.clipboard.writeText(text).then(function(){return true;}).catch(fallback);
+  }
+  return Promise.resolve(fallback());
+}
+function showCopyResult(btn, ok){
+  var orig=btn.getAttribute('data-orig')||btn.textContent; btn.setAttribute('data-orig',orig);
+  btn.textContent = ok ? '✔ コピーしました！' : '✖ コピーできません。⬇ダウンロードをどうぞ';
+  setTimeout(function(){ btn.textContent=orig; }, ok?1800:3500);
+}
+async function copyPrompt(id, btn){
+  var ok=await copyTextWithFallback(document.getElementById(id).textContent);
+  showCopyResult(btn, ok);
+}
+function downloadText(id, filename, btn){
+  try{
+    var text=document.getElementById(id).textContent;
+    var blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a'); a.href=url; a.download=filename;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+  }catch(e){ if(btn){ var o=btn.textContent; btn.textContent='✖ 保存できません。上のコピーをどうぞ'; setTimeout(function(){btn.textContent=o;},3500); } }
+}
+</script></body></html>
